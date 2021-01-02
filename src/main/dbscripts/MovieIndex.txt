@@ -1,0 +1,48 @@
+1) Create Index
+
+url : http://localhost:9200/movie
+request type: PUT
+body :
+{
+"mappings": {
+    "properties": {
+      "Name":         { "type": "text" },
+      "Description":  { "type": "text" },
+      "Genres":       { "type": "text" },
+      "PosterURI":    { "type": "text" },
+      "Rating":       { "type": "double" },
+      "Actor":        { "type": "text" },
+      "Certification":{ "type": "text" },
+      "Runtime":      { "type": "integer"},
+      "MovieFormat":  { "type": "text" },
+      "Language":     { "type": "text" },
+      "ReleaseDate":  { "type": "date" },
+      "TrailerLink":  { "type": "text" }
+    }
+  }
+}
+
+2) Insert Documents
+
+url : http://localhost:9200/movie/_doc/
+request type: POST
+body :
+{
+    "Name":"Dil Dhadakne Do",
+    "Description":  "Dil Dhadakne Do is about a dysfunctional Punjabi family travelling on a cruise ship through Europe. The film is directed by Zoya Akhtar and has a huge ensemble star cast.",
+    "Genres":["Drama", "Romantic"],
+    "Actor":["Ranveer Singh","Anushka Sharma"],
+    "PosterURI": "testPosterURI",
+    "Rating": 3.5,
+    "Certification": "UA",
+    "Runtime":      171,
+    "MovieFormat":  "2D",
+    "Language":     "Hindi",
+    "ReleaseDate":  "2015-06-05",
+    "TrailerLink":  "https://www.youtube.com/watch?v=QrT_fioqn4o"
+}
+
+3) Retrieve Document
+
+url: http://localhost:9200/movie/_search?pretty
+request type : GET

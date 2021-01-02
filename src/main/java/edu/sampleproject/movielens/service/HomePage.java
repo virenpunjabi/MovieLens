@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,8 @@ public class HomePage {
     public List<MovieLight> getNRecentMovies() {
         int n = 10;
         List<MovieLight> result = new ArrayList<MovieLight>();
-        for(int i=1; i<=n; i++)
-        result.add(new MovieLight("Id" + i, "Movie" + i, "Desc" + 1));
+        //for(int i=1; i<=n; i++)
+       // result.add(new MovieLight("Id" + i, "Movie" + i, "Desc" + 1));
         return result;
     }
 
@@ -26,8 +27,8 @@ public class HomePage {
     public List<MovieLight> getNRecentMovies(@RequestParam("n") int n) {
 //        int n = 10;
         List<MovieLight> result = new ArrayList<MovieLight>();
-        for(int i=1; i<=n; i++)
-            result.add(new MovieLight("Id" + i, "Movie" + i, "Desc" + 1));
+        //for(int i=1; i<=n; i++)
+           // result.add(new MovieLight("Id" + i, "Movie" + i, "Desc" + 1));
         return result;
     }
 

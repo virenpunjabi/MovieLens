@@ -5,19 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieLight {
-    private String id;
+public class LightActor {
     private String name;
-    private List<Genre> genreList;
-    private String posterUri;
-    private Double rating;
-    private Certification certification;
-
+    private String actorImageUri;
 }
-
