@@ -5,19 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieLight {
-    private String id;
-    private String name;
-    private List<Genre> genreList;
-    private String posterUri;
+public class Review {
+    private User userName;
+    private String comment;
+    private Date reviewDate;
+    private ReviewType reviewType;
     private Double rating;
-    private Certification certification;
 
 }
-
