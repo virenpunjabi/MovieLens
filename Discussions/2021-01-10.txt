@@ -1,0 +1,20 @@
+Points to be discussed :-
+-Release date -> routing issue
+	ES : uses hashing for sharding
+		based on movie id
+			Maintain a sorted list of movie ids vs release date (sorting on date) in a separate table
+				Adding an entry : O(logn)
+				Read : O(1)
+				How to have a clustered index on ES? Solution : use RDBMS or a NoSQL which
+			Sort while starting service : 10^14/10^9 = 10^5 s > few hours
+
+-Column name in CamelCase
+
+-Comments to be added in lifo manner
+
+-In movie table store actor name instead of id
+	we store both
+-Images of actors to be stored in a file system (folder name = actor id, predeteremined pic name) instead of storing path in actor table.
+	Use actor id in movide table to extract the image frm the predefinedd folder.
+-Insert movie id and movie name list in Actor table
+
