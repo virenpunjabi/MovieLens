@@ -19,9 +19,7 @@ public class ServiceImpl implements IService {
 
     @Override
     public List<MovieLight> getLightMoviesBasedOnFilter(Filter filter, int start, int offset) {
-        List<MovieLight> al= new ArrayList<>();
-        al.add(new MovieLight());
-        return al;
+        return null;
     }
 
     @Override
