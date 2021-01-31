@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LightActor {
+    private String id;
     private String name;
-    private String actorImageUri;
+//    private String actorImageUri;
 }
