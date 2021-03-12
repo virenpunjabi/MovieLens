@@ -1,0 +1,55 @@
+1) Create Index
+
+url : http://localhost:9200/review
+request type: PUT
+body :
+{
+"mappings": {
+    "properties": {
+      "MovieId":          { "type": "text" },
+      "Username":         { "type": "text" },
+      "Comment":          { "type": "text" },
+      "ReviewDate":       { "type": "text" },
+      "ReviewType":       { "type": "text" },
+      "Rating":           { "type": "double" }
+    }
+  }
+}
+
+{
+"settings": {
+    "index": {
+      "sort.field": "ReviewDate",
+      "sort.order": "desc"
+    }
+  },
+"mappings": {
+    "properties": {
+      "MovieId":          { "type": "text" },
+      "Username":         { "type": "text" },
+      "Comment":          { "type": "text" },
+      "ReviewDate":       { "type": "date","format":"YYYY-MM-DD'T'HH:mm:ss.SSS'Z'" },
+      "ReviewType":       { "type": "text" },
+      "Rating":           { "type": "double" }
+    }
+  }
+}
+
+2) Insert Documents
+
+url : http://localhost:9200/review/_doc/
+request type: POST
+body :
+{
+    "MovieId": "aZFkuHYBwD7mSNmlL366",
+    "Username": "Viren",
+    "Comment":  "This  movie is for people who love classy movies. Awesome cast. Nuances unveiled in the movie was simply refreshing to see, as it rarely appears in Indian cinema. Zoya Akhtar is a great story teller.",
+    "ReviewDate":"2015-06-05",
+    "ReviewType":"GOOD",
+    "Rating": 4.5
+}
+
+3) Retrieve Document
+
+url: http://localhost:9200/review/_search?pretty
+request type : GET
