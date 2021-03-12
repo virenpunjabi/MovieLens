@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-actuator:2.4.0'
+    compile 'org.springframework.boot:spring-boot-starter-web:2.4.0'
+    compile 'org.springframework.cloud:spring-cloud-starter-config:3.0.0'
+    compile 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.0'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    compile 'org.elasticsearch:elasticsearch:7.10.1'
+    compile 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.10.1'
+    compile 'com.google.code.gson:gson:2.8.6'
+    compile 'io.springfox:springfox-swagger2:2.9.2'
+    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+}
+
+group = 'edu.sampleprojects'
+version = '1.0-SNAPSHOT'
+description = 'MovieLens'
+java.sourceCompatibility = JavaVersion.VERSION_15
+
+def classpath = configurations.getByName("compile").resolve().collect {it.getAbsolutePath()}
+def buildClasspath = classpath.join(":");
+println "buildClassPath = ${buildClasspath}"
+
+def runtimeClasspath = classpath.collect{"file:///$it"}.join(" ");
+println "runtimeClasspath = ${runtimeClasspath}"
+
+jar {
+    manifest {
+        attributes (
+            "Main-Class": 'edu.sampleproject.movielens.Application',
+            "Build-Class-Path": buildClasspath,
+            "Class-Path": runtimeClasspath
+
+        )
+    }
+}

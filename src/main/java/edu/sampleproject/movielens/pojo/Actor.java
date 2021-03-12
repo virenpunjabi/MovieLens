@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +18,6 @@ public class Actor {
     private String actorImageUri;
     private String description;
     private Date dob;
-
-
+    private String birthPlace;
+    private List<MovieLight> movies;
 }
