@@ -6,6 +6,7 @@ import edu.sampleproject.movielens.pojo.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -18,8 +19,8 @@ public class HomePage {
 
     @GetMapping(path = "/home")
     public List<MovieLight> getNRecentMovies() {
-
-        return service.getNLightMovies(2);
+        return Collections.singletonList(new MovieLight("id", "name", null, null, null,null, null));
+//        return service.getNLightMovies(2);
     }
 
 
