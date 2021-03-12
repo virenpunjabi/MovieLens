@@ -7,14 +7,18 @@ import edu.sampleproject.movielens.pojo.Movie;
 import edu.sampleproject.movielens.pojo.MovieLight;
 import edu.sampleproject.movielens.pojo.Review;
 import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ServiceImpl implements IService {
+    private static final Logger LOG = LoggerFactory.getLogger(ServiceImpl.class);
 
     //@Autowired
     private MovieDao movieDao = new MovieDao();
@@ -22,28 +26,38 @@ public class ServiceImpl implements IService {
     //@Autowired
     private MovieWriterDao movieWriterDao = new MovieWriterDao();
 
-    @SneakyThrows
     @Override
     public List<MovieLight> getNLightMovies(int n) {
-        return movieDao.getNRecentMovies(n);
+        try {
+            return movieDao.getNRecentMovies(n);
+        } catch (IOException e) {
+            LOG.warn("", e);
+            return null;
+        }
     }
 
-    @SneakyThrows
     @Override
     public Movie getMovieWithNReviews(String movieId, int n) {
-        return movieDao.getMovie(movieId);
+        try {
+            return movieDao.getMovie(movieId);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    @SneakyThrows
     @Override
     public List<MovieLight> getLightMoviesBasedOnFilter(Filter filter, int n) {
         return null;
     }
 
-    @SneakyThrows
     @Override
     public void addMovie(Movie movie) {
-        movieWriterDao.writeMovie(movie);
+        try {
+            movieWriterDao.writeMovie(movie);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

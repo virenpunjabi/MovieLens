@@ -4,11 +4,16 @@ import edu.sampleproject.movielens.dao.MovieDao;
 import edu.sampleproject.movielens.dao.MovieWriterDao;
 import edu.sampleproject.movielens.pojo.Actor;
 import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class ActorServiceImpl implements IActorService {
+    private static final Logger LOG = LoggerFactory.getLogger(ActorServiceImpl.class);
 
     //@Autowired
     MovieDao movieDao = new MovieDao();
@@ -16,16 +21,23 @@ public class ActorServiceImpl implements IActorService {
     //@Autowired
     MovieWriterDao movieWriterDao = new MovieWriterDao();
 
-    @SneakyThrows
     @Override
     public void addActor(Actor actor) {
-        movieWriterDao.writeActor(actor);
+        try {
+            movieWriterDao.writeActor(actor);
+        } catch (IOException e) {
+            LOG.warn("Could not save actor.", e);
+        }
     }
 
-    @SneakyThrows
     @Override
     public Actor getActor(String id) {
-        return movieDao.getActor(id);
+        try {
+            return movieDao.getActor(id);
+        } catch (IOException e) {
+            LOG.warn("Could not get actor. id=" + id, e);
+        }
+        return null;
     }
 
     @Override

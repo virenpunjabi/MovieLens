@@ -3,10 +3,10 @@ package edu.sampleproject.movielens.service;
 import edu.sampleproject.movielens.dao.MovieDao;
 import edu.sampleproject.movielens.dao.MovieWriterDao;
 import edu.sampleproject.movielens.pojo.Review;
-import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -18,17 +18,24 @@ public class ReviewServiceImpl implements IReviewService {
     //@Autowired
     private MovieWriterDao movieWriterDao = new MovieWriterDao();
 
-    @SneakyThrows
     @Override
     public List<Review> getReviews(String movieId, int start, int offset) {
-        return movieDao.getNReviewsForMovie(movieId,start,offset);
+        try {
+            return movieDao.getNReviewsForMovie(movieId,start,offset);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 
-    @SneakyThrows
     @Override
     public void addReview(Review review, String movieId) {
         review.setMovieId(movieId);
-        movieWriterDao.writeReview(review);
+        try {
+            movieWriterDao.writeReview(review);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
