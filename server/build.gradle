@@ -3,8 +3,12 @@ plugins {
     id 'idea'
 }
 
+def repoDir = "/home/gradle/repo"
+
 repositories {
-    mavenLocal()
+    flatDir {
+        dirs repoDir
+    }
     mavenCentral()
 }
 
@@ -27,11 +31,11 @@ version = '1.0-SNAPSHOT'
 description = 'MovieLens'
 java.sourceCompatibility = JavaVersion.VERSION_15
 
-def classpath = configurations.getByName("compile").resolve().collect {it.getAbsolutePath()}
+def classpath = configurations.getByName("compile").resolve().collect {it.getName()}
 def buildClasspath = classpath.join(":");
-println "buildClassPath = ${buildClasspath}"
+//println "buildClassPath = ${buildClasspath}"
 
-def runtimeClasspath = classpath.collect{"file:///$it"}.join(" ");
+def runtimeClasspath = classpath.collect{"file:///$repoDir/$it"}.join(" ");
 println "runtimeClasspath = ${runtimeClasspath}"
 
 jar {
@@ -40,7 +44,11 @@ jar {
             "Main-Class": 'edu.sampleproject.movielens.Application',
             "Build-Class-Path": buildClasspath,
             "Class-Path": runtimeClasspath
-
         )
     }
+}
+
+task copyDep(type: Copy) {
+    from configurations.compile.resolve().findAll {!it.absolutePath.contains("${repoDir}")}
+    into repoDir
 }
