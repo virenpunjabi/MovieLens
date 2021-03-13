@@ -1,0 +1,88 @@
+
+scalar Date
+type Query{
+    getNRecentMovies(n:Int):[Movie]
+    getMovie(id:String):Movie
+    getNReviewsForMovie(id:String,start:Int,offset:Int):[Review]
+}
+
+type Movie{
+    id:String
+    name:String
+    shortDesc:String
+    Genres:[Genre]
+    posterUri:String
+    rating: Float
+    certification: Certification
+    runtime: Int
+    actors:[Actor]
+    movieFormats: [MovieFormat]
+    languages:[Language]
+    releaseDate:Date
+    trailerLink:String
+}
+
+type Actor{
+    id:String
+    name:String
+    actorImageUri:String
+    description:String
+    dob:Date
+    birthPlace:String
+    movies:[Movie]
+}
+
+type Review{
+    userName:User
+    comment:String
+    reviewDate:Date
+    reviewType:ReviewType
+    rating:Float
+}
+
+type User{
+    firstName:String
+    lastName:String
+    email:String
+}
+
+#-------------------------ENUMS-----------------------------
+
+enum Genre {
+    ACTION,
+    COMEDY,
+    ROMANTIC,
+    ADVENTURE,
+    DRAMA,
+    THRILER,
+    HORROR
+}
+
+#Language Enum
+enum Language {
+    HINDI,
+    ENGLISH,
+    MARATHI,
+    TELUGU,
+    TAMIL
+}
+
+enum MovieFormat{
+    "2D" TWOD
+    "3D" THREED
+    "4DX" FOURD
+    "IMAX" IMAX
+}
+
+enum Certification{
+    "U" UNIVERSAL
+    "UA" UNIVERSALANDADULTS
+    "A"  ADULTS
+}
+
+enum ReviewType{
+    GOOD,
+    BAD,
+    AVERAGE
+}
+

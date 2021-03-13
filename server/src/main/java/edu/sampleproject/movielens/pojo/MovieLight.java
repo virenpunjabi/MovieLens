@@ -20,6 +20,7 @@ public class MovieLight {
     private Double rating;
     private Certification certification;
     private List<Language> languageList;
+    private Integer runtime;
 
 }
 

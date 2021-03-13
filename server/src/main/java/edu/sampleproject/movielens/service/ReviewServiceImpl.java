@@ -13,7 +13,7 @@ import java.util.List;
 public class ReviewServiceImpl implements IReviewService {
 
     //@Autowired
-    private MovieDao movieDao = new MovieDao();
+    private MovieDao movieDao = MovieDao.getInstance();
 
     //@Autowired
     private MovieWriterDao movieWriterDao = new MovieWriterDao();

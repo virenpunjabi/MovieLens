@@ -16,7 +16,7 @@ public class ActorServiceImpl implements IActorService {
     private static final Logger LOG = LoggerFactory.getLogger(ActorServiceImpl.class);
 
     //@Autowired
-    MovieDao movieDao = new MovieDao();
+    MovieDao movieDao = MovieDao.getInstance();
 
     //@Autowired
     MovieWriterDao movieWriterDao = new MovieWriterDao();
