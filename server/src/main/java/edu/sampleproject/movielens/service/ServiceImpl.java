@@ -21,7 +21,7 @@ public class ServiceImpl implements IService {
     private static final Logger LOG = LoggerFactory.getLogger(ServiceImpl.class);
 
     //@Autowired
-    private MovieDao movieDao = new MovieDao();
+    private MovieDao movieDao = MovieDao.getInstance();
 
     //@Autowired
     private MovieWriterDao movieWriterDao = new MovieWriterDao();

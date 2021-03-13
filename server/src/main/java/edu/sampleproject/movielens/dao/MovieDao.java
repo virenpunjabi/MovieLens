@@ -17,7 +17,9 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -25,13 +27,16 @@ public class MovieDao {
     private static MovieDao INSTANCE = new MovieDao();
     RestHighLevelClient client;
 
-    public MovieDao() {
+    private MovieDao() {
         client = new RestHighLevelClient(
                 RestClient.builder(
                         new HttpHost("localhost", 9200, "http"),
                         new HttpHost("localhost", 9201, "http")));
     }
 
+    public static MovieDao getInstance() {
+        return INSTANCE;
+    }
     public Movie getMovie(String movieId) throws IOException {
         GetRequest request = new GetRequest("movie");
         request.id(movieId);
@@ -49,7 +54,7 @@ public class MovieDao {
         movie.setShortDesc((String) jsonMap.get("Description"));
         movie.setCertification(Certification.getFromName(((String) jsonMap.get("Certification")).toUpperCase()));
         movie.setRuntime((Integer) jsonMap.get("Runtime"));
-        movie.setReleaseDate((Date) jsonMap.get("ReleaseDate"));
+        movie.setReleaseDate((LocalDate) jsonMap.get("ReleaseDate"));
         movie.setPosterUri((String) jsonMap.get("PosterURI"));
         movie.setTrailerLink((String) jsonMap.get("TrailerLink"));
         movie.setTotalRating((Double) jsonMap.get("TotalRating"));
@@ -196,7 +201,7 @@ public class MovieDao {
         //actor.setId((String) jsonMap.get("ActorId"));
         actor.setName((String) jsonMap.get("Name"));
         //actor.setActorImageUri((String) jsonMap.get("ActorImageURI"));
-        actor.setDob((Date) jsonMap.get("Dob"));
+        actor.setDob((LocalDate) jsonMap.get("Dob"));
         actor.setBirthPlace((String) jsonMap.get("BirthPlace"));
         actor.setDescription((String) jsonMap.get("Description"));
         if (jsonMap.get("Movies") instanceof List) {
