@@ -3,7 +3,8 @@ plugins {
     id 'idea'
 }
 
-def repoDir = "/home/gradle/repo"
+def repoDir = project.properties['GRADLE_REPO_DIR']
+println "RepoDir=$repoDir"
 
 repositories {
     flatDir {
@@ -12,18 +13,45 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    springBootVersion = '2.4.0'
+    cloudConfigVersion = '3.0.0'
+    lombokVersion = '1.18.12'
+    esVersion = '7.10.1'
+    swaggerVersion = '2.9.2'
+    graphqlVersion = '15.0'
+    graphqlExtendedVersion = '15.0.0'
+    graphqlSpringBootVersion = '7.1.0'
+}
+
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-actuator:2.4.0'
-    compile 'org.springframework.boot:spring-boot-starter-web:2.4.0'
-    compile 'org.springframework.cloud:spring-cloud-starter-config:3.0.0'
-    compile 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.0'
-    compileOnly 'org.projectlombok:lombok:1.18.12'
-    annotationProcessor 'org.projectlombok:lombok:1.18.12'
-    compile 'org.elasticsearch:elasticsearch:7.10.1'
-    compile 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.10.1'
     compile 'com.google.code.gson:gson:2.8.6'
-    compile 'io.springfox:springfox-swagger2:2.9.2'
-    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+
+    // spring boot
+    compile "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+    compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+
+    // spring cloud config
+    compile "org.springframework.cloud:spring-cloud-starter-config:$cloudConfigVersion"
+    compile "org.springframework.cloud:spring-cloud-starter-bootstrap:$cloudConfigVersion"
+
+    // lombok
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    // elasticsearch
+    compile "org.elasticsearch:elasticsearch:$esVersion"
+    compile "org.elasticsearch.client:elasticsearch-rest-high-level-client:$esVersion"
+
+    // swagger
+    compile "io.springfox:springfox-swagger2:$swaggerVersion"
+    compile "io.springfox:springfox-swagger-ui:$swaggerVersion"
+
+    // graphql
+    compile "com.graphql-java:graphql-java:$graphqlVersion"
+    compile "com.graphql-java:graphql-java-extended-scalars:$graphqlExtendedVersion"
+    compile "com.graphql-java-kickstart:graphql-spring-boot-starter:$graphqlSpringBootVersion"
+    compile "com.graphql-java-kickstart:playground-spring-boot-starter:$graphqlSpringBootVersion"
 }
 
 group = 'edu.sampleprojects'

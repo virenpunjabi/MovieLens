@@ -17,6 +17,7 @@ import org.elasticsearch.script.ScriptType;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 public class MovieWriterDao {
@@ -200,7 +201,7 @@ public class MovieWriterDao {
     private void testAddActor() throws IOException {
         Actor actor = new Actor();
         actor.setName("Shraddha Kapoor");
-        actor.setDob(new Date());
+        actor.setDob(LocalDate.of(1,1,1));
         actor.setBirthPlace("Mumbai");
         actor.setDescription("Desciptionnn");
         writeActor(actor);

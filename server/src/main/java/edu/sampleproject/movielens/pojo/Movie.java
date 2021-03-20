@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -24,7 +24,7 @@ public class Movie {
     private Integer runtime;
     private List<MovieFormat> movieFormat;
     private List<Language> languages;
-    private Date releaseDate;
+    private LocalDate releaseDate;
     private String trailerLink;
     private Double totalRating;
     private Double totalReviewers;

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,7 +17,7 @@ public class Actor {
     private String name;
     private String actorImageUri;
     private String description;
-    private Date dob;
+    private LocalDate dob;
     private String birthPlace;
     private List<MovieLight> movies;
 }

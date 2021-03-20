@@ -19,7 +19,7 @@ public class HomePage {
 
     @GetMapping(path = "/home")
     public List<MovieLight> getNRecentMovies() {
-        return Collections.singletonList(new MovieLight("id", "name", null, null, null,null, null));
+        return Collections.singletonList(new MovieLight("id", "name", null, null, null,null, null,null));
 //        return service.getNLightMovies(2);
     }
 
