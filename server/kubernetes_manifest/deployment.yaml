@@ -10,3 +10,19 @@ spec:
   selector:
     matchLabels:
       app: movielens-backend
+  template:
+    metadata:
+      name: movielens-backend-pod
+      labels:
+        app: movielens-backend
+    spec:
+      containers:
+        - name: movielens-backend
+          image: dockerhub.io/roygou/movielens:latest
+          resources:
+            requests:
+              cpu: 250m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
