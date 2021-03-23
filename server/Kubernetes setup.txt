@@ -1,0 +1,20 @@
+az aks create --resource-group movielens --name movielensAKC --node-count 1 --enable-addons monitoring --generate-ssh-keys
+
+az provider show -n Microsoft.OperationsManagement -o table
+az provider show -n Microsoft.OperationalInsights -o table
+
+// if not registered
+az provider register --namespace Microsoft.OperationsManagement
+az provider register --namespace Microsoft.OperationalInsights
+
+az aks install-cli
+az aks get-credentials --resource-group movielens --name movielensAKC
+
+kubectl get nodes
+kubectl apply -f movielens_aks.yaml
+kubectl create secret docker-registry regcred --docker-username=<user-name>> --docker-password=<your-pword> --docker-email=roy.gourab05@gmail.com -n <namespace>
+
+kubectl create secret docker-registry regcred --docker-username=roygou --docker-password=Upton@123 --docker-email=roy.gourab05@gmail.com -n
+
+kubectl get pod nginx
+
