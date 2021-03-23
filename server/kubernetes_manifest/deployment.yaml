@@ -2,10 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: movielens-deploy
-  matchLabels:
+  labels:
     app: movielens-backend
 spec:
   # Number of Pods that should exist at all times.
   replicas: 2
   selector:
-    app: movielens-backend
+    selector:
+      matchLabels:
+        app: movielens-backend
