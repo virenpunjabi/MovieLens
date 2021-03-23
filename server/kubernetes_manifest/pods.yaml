@@ -1,0 +1,10 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: movielens-backend-pod
+  labels:
+    - app: movielens-backend
+spec:
+  containers:
+    - name: movielens-backend
+      image: dockerhub.io/roygou/movielens:latest

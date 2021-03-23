@@ -1,11 +1,11 @@
 #
 # Build stage
 #
-FROM movielens_base AS build
+FROM roygou/movielens:base-latest AS build
 RUN rm -fr /home/gradle/src/*
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN gradle -P/home/repo/gradle build copyDep > gradle_build.log
+RUN gradle -P/home/repo/gradle -PGRADLE_REPO_DIR=/home/repo/gradle build copyDep > gradle_build.log
 
 #
 # Package stage
