@@ -8,6 +8,5 @@ spec:
   # Number of Pods that should exist at all times.
   replicas: 2
   selector:
-    selector:
-      matchLabels:
-        app: movielens-backend
+    matchLabels:
+      app: movielens-backend
