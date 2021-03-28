@@ -1,8 +1,5 @@
-#
-# Build stage
-#
-FROM gradle:6.8.3-jre15
-RUN mkdir /home/gradle/src
+FROM roygou/movielens-build:latest
+RUN rm -fr /home/gradle/src/*
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle -P/home/repo/gradle -PGRADLE_REPO_DIR=/home/repo/gradle build copyDep > gradle_build.log
