@@ -1,6 +1,7 @@
 package edu.sampleproject.movielens.dao;
 
 
+import edu.sampleproject.movielens.configurations.CommonConfig;
 import edu.sampleproject.movielens.pojo.*;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.get.GetRequest;
@@ -16,27 +17,25 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
-
+@Component
 public class MovieDao {
-    private static MovieDao INSTANCE = new MovieDao();
-    RestHighLevelClient client;
+    Logger LOGGER = LoggerFactory.getLogger(MovieWriterDao.class);
 
-    private MovieDao() {
-        client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("localhost", 9200, "http"),
-                        new HttpHost("localhost", 9201, "http")));
-    }
+    @Autowired
+    private RestHighLevelClient client;
+    @Autowired
+    private CommonConfig commonConfig;
 
-    public static MovieDao getInstance() {
-        return INSTANCE;
-    }
     public Movie getMovie(String movieId) throws IOException {
         GetRequest request = new GetRequest("movie");
         request.id(movieId);
@@ -233,7 +232,7 @@ public class MovieDao {
         for (SearchHit searchHit : searchHits) {
             MovieLight movieLight = getLightMovieFromMap(searchHit.getSourceAsMap());
             movieLight.setId(searchHit.getId());
-            movieLight.setPosterUri("http://localhost:8080/images/"+searchHit.getId()+".jpg");
+            movieLight.setPosterUri(commonConfig.getImageURI() + searchHit.getId() + ".jpg");
             movieList.add(movieLight);
         }
         return movieList;

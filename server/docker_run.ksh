@@ -13,3 +13,5 @@ docker exec -it test /bin/bash
 
 docker build -t roygou/movielens-build:latest -t roygou/movielens-build:1.0.0 -f Dockerfile_build .
 docker build -t roygou/movielens-backend:latest -t roygou/movielens-backend:1.0.0 -f Dockerfile .
+
+docker run --name elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.12.0

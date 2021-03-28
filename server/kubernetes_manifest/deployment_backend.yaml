@@ -5,24 +5,18 @@ metadata:
   labels:
     app: movielens-deploy
 spec: # deployment spec
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: movielens-pod
+      app: movielens-back-pod
   template: # pod template
     metadata:
       labels:
-        app: movielens-pod
+        app: movielens-back-pod
     spec: # pod
       containers:
-        - name: movielens
+        - name: movielens-back
           image: roygou/movielens-backend:latest
-#          readinessProbe:
-#            httpGet:
-#              scheme: HTTP
-#              host: localhost
-#              port: 8080
-#              path: home
           resources:
             requests:
               cpu: 250m
@@ -32,12 +26,12 @@ spec: # deployment spec
               memory: 256Mi
 ---
 apiVersion: v1
-kind: Service # load balancer
+kind: Service # load balancer for backend
 metadata:
   name: movielens-lb
 spec:
   selector:
-    app: movielens-pod # routing incoming traffic to backend pods
+    app: movielens-back-pod # routing incoming traffic to backend pods
   type: LoadBalancer
   ports:
     - port: 80
