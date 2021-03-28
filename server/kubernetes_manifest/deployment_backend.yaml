@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment # deployment
+metadata:
+  name: movielens
+  labels:
+    app: movielens-deploy
+spec: # deployment spec
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movielens-back-pod
+  template: # pod template
+    metadata:
+      labels:
+        app: movielens-back-pod
+    spec: # pod
+      containers:
+        - name: movielens-back
+          image: roygou/movielens-backend:latest
+          resources:
+            requests:
+              cpu: 250m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service # load balancer for backend
+metadata:
+  name: movielens-lb
+spec:
+  selector:
+    app: movielens-back-pod # routing incoming traffic to backend pods
+  type: LoadBalancer
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080

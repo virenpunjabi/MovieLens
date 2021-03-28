@@ -14,29 +14,24 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
+@Component
 public class MovieWriterDao {
+    Logger LOGGER = LoggerFactory.getLogger(MovieWriterDao.class);
 
-    static RestHighLevelClient client;
+    @Autowired
+    private RestHighLevelClient client;
 
-    public MovieWriterDao(){
-        client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("localhost", 9200, "http"),
-                        new HttpHost("localhost", 9201, "http")));
-    }
-
-    public String writeMovie(Movie movie)throws IOException{
-        final String uri = "http://localhost:9200/movie/_doc";
-//        RestTemplate restTemplate = new RestTemplate();
-//        Movie result = restTemplate.postForObject(uri, movie, Movie.class);
-//        System.out.println(result);
-
+    public String writeMovie(Movie movie) throws IOException{
         List<LightActor> actors = movie.getActors();
         XContentBuilder builder = XContentFactory.jsonBuilder()
                 .startObject()
