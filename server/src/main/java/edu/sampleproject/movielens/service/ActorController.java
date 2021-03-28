@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ActorController {
 
-    IActorService service;
+    IActorService service = new ActorServiceImpl();
 
     @RequestMapping(method = RequestMethod.POST, value = "/actor")
     public void addActor(@RequestBody Actor actor) {

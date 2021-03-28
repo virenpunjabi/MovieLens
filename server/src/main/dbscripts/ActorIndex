@@ -1,0 +1,110 @@
+1) Create Index
+
+url : http://localhost:9200/actor
+request type: PUT
+body :
+{
+"mappings": {
+    "properties": {
+      "Name":         { "type": "text" },
+      "DateOfBirth":  { "type": "text" },
+      "BirthPlace":   { "type": "text" },
+      "Description":  { "type": "text" },
+       "Movies":{
+            "mappings":{
+                "properties":{
+                   "Id":{"type":"text"},
+                   "Name":{"type":"text"}
+                }
+            }
+            }
+    }
+  }
+}
+
+2) Insert Documents
+
+url: http://localhost:9200/actor/_doc/_bulk
+request type : POST
+body:
+{ "index":{"_id": "rltDIXcB0-ocmwxxgFc6"} }
+{
+"Name":"Sushant Singh Rajput",
+"DateOfBirth":"1986-01-21",
+"BirthPlace":"Patna, Inda",
+"Description":  "Sushant Singh Rajput was an Indian television and movie actor who is best remembered for his work in the then-popular show Pavitra Rishta, where he played the role of Manav Deshmukh. He was associated with the show from 2009 to 2011, after which he bagged the role in Abhishek Kapoor`s Kai Po Che! in 2013, for which he won a Filmfare Award nomination for Best Debut and three awards in the same category. Over the years he went on to appear in several movies, a promising beginning for his career as an actor. On 14th June 2020, the talented actor met his untimely demise.",
+"Movies":[
+    {
+        "Id":"mXi1UXgBtHd0Ifm6DFoh",
+        "Name":"Dil Bechara"
+    }
+]
+
+ }
+{ "index":{ "_id": "r1tGIXcB0-ocmwxxCVde" } }
+{
+"Name":"Sanjana Sanghi",
+"DateOfBirth":"1996-09-02",
+"BirthPlace":"Mumbai, India",
+ "Description":  "Sanjana Sanghi is an Indian actress, who primarily works in the Hindi film industry. She made her acting debut with the 2011 movie Rockstar. She was later seen in the comedy-drama Hindi Medium (2016). In 2017 she made an appearance in Fukrey Returns. Her 2020 releases include Dil Bechara, a Bollywood adaptation of the John Green book The Fault in our Stars. She starred alongside the late actor Sushant Singh Rajput, who passed away shortly after filming. The film is her debut as a lead actress.",
+ "Movies":[
+     {
+         "Id":"mXi1UXgBtHd0Ifm6DFoh",
+         "Name":"Dil Bechara"
+     }
+ }
+
+ { "index":{ "_id": "k3iVUXgBtHd0Ifm6uVpv" } }
+ {
+ "Name":"Ranveer Singh",
+ "DateOfBirth":"1985-07-06",
+ "BirthPlace":"Mumbai, India",
+  "Description":  "Equally at ease portraying the brave nobility of Bajirao, the roguish charm of Ram Rajari and the devilish cruelty of Khilji, Ranveer Singh is one of the most dynamic leading men to have emerged out of Bollywood in recent times. Since his debut in the sleeper hit Band Baaja Baaraat in 2010, he has consistently delivered several memorable performances in a wide range of roles; from the conflicted thief in Lootera (2013) to the flamboyant outlaw in Gunday (2014) and two contrasting historical figures in Bajirao Mastani (2015) and Padmavat (2018).",
+  "Movies":[
+      {
+          "Id":"mXi1UXgBtHd0Ifm6DFohh",
+          "Name":"Dil Dhadakne Do"
+      }
+  }
+
+  { "index":{ "_id": "lHiyUXgBtHd0Ifm6AFrG" } }
+   {
+   "Name":"Anushka Sharma",
+   "DateOfBirth":"1988-05-01",
+   "BirthPlace":"Bengaluru, India",
+    "Description":  "Coming from an army family, Anushka Sharma took a U-Turn, when she initially walked the ramp as a model in 2007 and made her silver screen debut in Aditya Chopra`s Rab Ne Bana Di Jodi in 2008. Since then Anushka has carved a name for herself as an independent actress and a thoughtful producer. Over the years she has acted in movies like Band Baaja Baaraat, PK, Sultan and Jab Harry met Sejal, making her one of the top actresses in India. In 2015, Anushka collaborated with her brother Karnesh Sharma and co-produced NH10, under the banner of her production company, Clean Slate Films.",
+    "Movies":[
+        {
+            "Id":"mXi1UXgBtHd0Ifm6DFohh",
+            "Name":"Dil Dhadakne Do"
+        }
+    }
+
+    { "index":{ "_id": "lniyUXgBtHd0Ifm6AFrG" } }
+       {
+       "Name":"Robert Downey Jr.",
+       "DateOfBirth":"1965-04-04",
+       "BirthPlace":"New York, United States Of America",
+        "Description":  "Robert Downey Jr. is a prominent American actor, producer, and playback singer. Best known for his portrayal of Tony Stark in Iron Man, the superstar is one of the highest paid actors in the world, ranking in at number one from 2012 to 2015. After a promising start to his career as a child actor, Robert Downey Jr struggled with drugs and alcohol-related problems. However, he soon recovered and became one of Hollywood`s most sought-after actors, starring in numerous blockbusters and winning several awards along the way.",
+        "Movies":[
+            {
+                "Id":"mni1UXgBtHd0Ifm6DFoh",
+                "Name":"Iron Man"
+            }
+        }
+
+    { "index":{ "_id": "l3iyUXgBtHd0Ifm6AFrG" } }
+           {
+           "Name":"Rowan Atkinson",
+           "DateOfBirth":"1955-01-06",
+           "BirthPlace":"Consett, Durham, United Kingdom",
+            "Description":  "Rowan Atkinson is an English actor, comedian, and screenwriter who is best known as Mr. Bean. His career took off on the small screen with the BBC comedy sketch show Not the Nine O`Clock News, after which he bagged prominent roles in numerous sitcoms, reality shows and films. He gained worldwide recognition with his role as the bumbling Mr. Bean, a character he created himself which went on to get a TV show and a film series.Some of his most notable credits include films like Bean (1997), Scooby-Doo (2002), Johnny English (2003), Love Actually (2003), Keeping Mum (2005), Mr. Bean`s Holiday (2007), Johnny English Reborn (2011) and Johnny English Strikes Again (2018).",
+            "Movies":[
+                {
+                    "Id":"m3i1UXgBtHd0Ifm6DFoi",
+                    "Name":"Mr Bean"
+                }
+            }
+
+
+
