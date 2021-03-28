@@ -10,7 +10,7 @@ public interface IService {
 
     Movie getMovieWithNReviews(String movieId, int n);
 
-    List<MovieLight> getLightMoviesBasedOnFilter(Filter filter, int n);
+    List<MovieLight> getLightMoviesBasedOnFilter(String filter, int n);
 
     void addMovie(Movie movie);
 

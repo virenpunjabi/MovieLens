@@ -22,6 +22,11 @@ public class HomePage {
         return service.getNLightMovies(2);
     }
 
+    @RequestMapping(method = RequestMethod.POST, value="/homePost")
+    public List<MovieLight> getFilteredMovies(@RequestBody String filterRequest){
+        return service.getLightMoviesBasedOnFilter(filterRequest,3);
+    }
+
 
     //@GetMapping(path = "home/{n}")
     @RequestMapping("/home/{id}")
@@ -30,7 +35,7 @@ public class HomePage {
         return service.getMovieWithNReviews(id, 10);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/home")
+    @RequestMapping(method = RequestMethod.POST, value = "/home/add")
     public void addMovie(@RequestBody Movie movie) {
         service.addMovie(movie);
     }

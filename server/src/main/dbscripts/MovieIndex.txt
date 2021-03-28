@@ -11,7 +11,14 @@ body :
       "Genres":       { "type": "text" },
       "PosterURI":    { "type": "text" },
       "Rating":       { "type": "double" },
-      "Actor":        { "type": "text" },
+        "Actor":{
+            "mappings":{
+                "properties":{
+                   "Id":{"type":"text"},
+                   "Name":{"type":"text"}
+                }
+            }
+            },
       "Certification":{ "type": "text" },
       "Runtime":      { "type": "integer"},
       "MovieFormat":  { "type": "text" },
