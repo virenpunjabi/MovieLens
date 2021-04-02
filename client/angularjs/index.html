@@ -1,147 +1,97 @@
 <html>
-<head>
-<title></title>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-</head>
-<link rel="stylesheet" href="style.css">
-<body>
-    <div id="top-row">
-        <a id="logo" href="">MovieLens</a>
-        <form id="movie-search-form" action="">
-        <input type="text" id="movie-search-field">
-        <input type="submit" value="Search" id="movie-search-btn">
-        </form>
-    </div>
-    
-    <div id="main-body" class="clearfix">
-    
-    
-    <div id="siderBar-filters" >
-      <div>
-       <h1 style="display: inline-block" style="margin: 5%">Filters</h1>
-       <span style="float: right;margin: 8%"><input type="button" value="Apply" style="padding: 10%;font-size: 110%"></span>
-       </div>
-        <div id="language-filter-box" >
-            <div id="language-top-row">
-                <span style="margin-left: 5%">Language</span><span style="float: right;margin-right: 5%;">Clear</span>
+
+    <head>
+        <title></title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    </head>
+
+    <link rel="stylesheet" href="style.css">
+
+    <body>
+        <div id="top-row">
+            <a id="logo" href="">MovieLens</a>
+            <form id="movie-search-form" action="">
+                <input type="text" id="movie-search-field">
+                <input type="submit" value="Search" id="movie-search-btn">
+            </form>
+        </div>
+
+        <div id="main-body" class="clearfix">
+
+
+            <div id="siderBar-filters">
+                <div>
+                    <h1 style="display: inline-block" style="margin: 5%">Filters</h1>
+                    <span style="float: right;margin: 8%">
+                        <input type="button" value="Apply" style="padding: 10%;font-size: 110%">
+                    </span>
+                </div>
+                <div id="language-filter-box">
+                    <div id="language-top-row">
+                        <span style="margin-left: 5%">Language</span>
+                        <span style="float: right;margin-right: 5%;">Clear</span>
+                    </div>
+                    <div id="language-filters">
+                        <span class="filter-option">Hindi</span>
+                        <span class="filter-option">English</span>
+                        <span class="filter-option">Marathi</span>
+                        <span class="filter-option">Gujrati</span>
+                        <span class="filter-option">Telugu</span>
+                        <span class="filter-option">Kannada</span>
+                        <span class="filter-option">Tamil</span>
+                    </div>
+                </div>
+
+                <div id="language-filter-box">
+                    <div id="language-top-row">
+                        <span style="margin-left: 5%">Genre</span><span style="float: right;margin-right: 5%;">Clear</span>
+                    </div>
+                    <div id="language-filters">
+                        <span class="filter-option">Romantic</span>
+                        <span class="filter-option">Comedy</span>
+                        <span class="filter-option">Drama</span>
+                        <span class="filter-option">Action</span>
+                        <span class="filter-option">Horror</span>
+                        <span class="filter-option">Adventure</span>
+                        <span class="filter-option">Thriller</span>
+                        <span class="filter-option">Biography</span>
+                        <span class="filter-option">Fantasy</span>
+                        <span class="filter-option">Sci-Fi</span>
+                    </div>
+                </div>
+
             </div>
-            <div id="language-filters" >
-                <span class="filter-option">Hindi</span>
-                <span class="filter-option">English</span>
-                <span class="filter-option">Marathi</span>
-                <span class="filter-option">Gujrati</span>
-                <span class="filter-option">Telugu</span>
-                <span class="filter-option">Kannada</span>
-                <span class="filter-option">Tamil</span>
+
+            <div ng-app="movieContainerApp" ng-controller="movieContainerCtrl" id="movie-container">
+                <div id="language-filters">
+                    <span class="filter-option" style="width: 16%" ng-repeat="x in lightMovies">
+                        <img src="{{x.posterUri}}" alt="" width="150" height="213">
+                        <label class="movie-title">{{x.name}}</label>
+                        <label class="movie-attr">{{x.rating}}</label>
+                        <label class="list-attr">{{x.genreList}}</label>
+                        <label class="list-attr">{{x.languageList}}</label>
+                    </span>
+                </div>
             </div>
         </div>
-        
-          <div id="language-filter-box" >
-            <div id="language-top-row">
-                <span style="margin-left: 5%">Genre</span><span style="float: right;margin-right: 5%;">Clear</span>
-            </div>
-            <div id="language-filters" >
-                <span class="filter-option">Romantic</span>
-                <span class="filter-option">Comedy</span>
-                <span class="filter-option">Drama</span>
-                <span class="filter-option">Action</span>
-                <span class="filter-option">Horror</span>
-                <span class="filter-option">Adventure</span>
-                <span class="filter-option">Thriller</span>
-                <span class="filter-option">Biography</span>
-                <span class="filter-option">Fantasy</span>
-                <span class="filter-option">Sci-Fi</span>
-            </div>
-        </div>
-        
-    </div>
 
-    <div ng-app="movieContainerApp" ng-controller="movieContainerCtrl" id="movie-container">
-       <div id="language-filters">
-       
-           <span class="filter-option" style="width: 16%" ng-repeat="x in lightMovies">
-<!--        <img src="https://https://storageaccmovielens.blob.core.windows.net/images/chhichore.jpg/images/{{x.id}}.jpg" alt="" width="150" height="213"> -->
-        <img src="{{x.posterUri}}" alt="" width="150" height="213">
-        <label class="movie-title">{{x.name}}</label>
-        <label class="movie-attr">{{x.rating}}</label>
-        <label class="list-attr">{{x.genreList}}</label>
-        <label class="list-attr">{{x.languageList}}</label>
-        </span>
-       
-            <span class="filter-option" style="width: 16%">
-        <img src="https://storageaccmovielens.blob.core.windows.net/images/chhichore.jpg" alt="" width="150" height="213">
-        <label class="movie-title">Chhichore</label>
-        <label class="movie-attr">4.5</label>
-        <label class="list-attr">DRAMA,COMEDY</label>
-        <label class="list-attr">HINDI</label>
-        </span>
-        
+        <script>
+                
+                var movieContainerApp = angular.module("movieContainerApp",[]);
+                var backendURL = "http://20.193.31.25/home";
+                movieContainerApp.controller("movieContainerCtrl",function($scope, $http) {
+                    $http.get(backendURL).then(function(response) {
+                        $scope.lightMovies = response.data;
+                        for(x in $scope.lightMovies) {
+                            var genreStr = $scope.lightMovies[x].genreList.toString();
+                            $scope.lightMovies[x].genreList = genreStr;
+                            var languageStr = $scope.lightMovies[x].languageList.toString();
+                            $scope.lightMovies[x].languageList = languageStr;
+                        }
+                    });
+                });
 
-        <span class="filter-option" style="width: 16%">
-            <img src="https://storageaccmovielens.blob.core.windows.net/images/TheLastStand.jpg" alt="" width="150" height="213">
- 
-        <label class="movie-title">The Last Stand</label>
-        <label class="movie-attr">English</label>
-        <label class="movie-attr">U/A</label>
-        </span>
-        
-           <span class="filter-option" style="width: 16%">
-            <img src="https://storageaccmovielens.blob.core.windows.net/images/Spiderman.jpg" alt="" width="150" height="213">
-        <label class="movie-title">Spiderman</label>
-        <label class="movie-attr">English</label>
-        <label class="movie-attr">U/A</label>
-        </span>
-        
-        <span class="filter-option" style="width: 16%">
-        <img src="https://storageaccmovielens.blob.core.windows.net/images/chhichore.jpg" alt="" width="150" height="213">
-        <label class="movie-title">Chhichore</label>
-        <label class="movie-attr">Hindi</label>
-        <label class="movie-attr">U/A</label>
-        </span>
-        
-        <span class="filter-option" style="width: 16%">
-        <img src="https://storageaccmovielens.blob.core.windows.net/images/Dhoni.jpg" alt="" width="150" height="213">
-        <label class="movie-title">MS Dhoni: The Untold Story</label>
-        <label class="movie-attr">Hindi</label>
-        <label class="movie-attr">U/A</label>
-        </span>
-        
-         <span class="filter-option" style="width: 16%">
-        <img src="https://storageaccmovielens.blob.core.windows.net/images/IronMan.jpg" alt="" width="150" height="213">
-        <label class="movie-title">Ironman</label>
-        <label class="movie-attr">English</label>
-        <label class="movie-attr">U/A</label>
-        </span>
-
-        
-
-        </div>
-        
-    </div>
-    </div>
+        </script>
+    </body>
     
-    <script>
-        
-        var movieContainerApp = angular.module("movieContainerApp",[]);
-        movieContainerApp.controller("movieContainerCtrl",function($scope, $http){
-            //52.226.47.140
-              $http.get("http://localhost:8080/home").then(function(response){
-                  //console.log(response.data);
-                  $scope.lightMovies = response.data;
-                  
-                  for(x in $scope.lightMovies){
-                      var genreStr = $scope.lightMovies[x].genreList.toString();
-                      $scope.lightMovies[x].genreList = genreStr;
-                      var languageStr = $scope.lightMovies[x].languageList.toString();
-                      $scope.lightMovies[x].languageList = languageStr;
-                    
-                  }
-                  console.log($scope.lightMovies);
-              });
-                                                             
-        });
-        
-        
-    </script>
-</body>
 </html>

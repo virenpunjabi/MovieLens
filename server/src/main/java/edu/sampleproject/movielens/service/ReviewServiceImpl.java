@@ -3,6 +3,7 @@ package edu.sampleproject.movielens.service;
 import edu.sampleproject.movielens.dao.MovieDao;
 import edu.sampleproject.movielens.dao.MovieWriterDao;
 import edu.sampleproject.movielens.pojo.Review;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -12,11 +13,11 @@ import java.util.List;
 @Service
 public class ReviewServiceImpl implements IReviewService {
 
-    //@Autowired
-    private MovieDao movieDao = MovieDao.getInstance();
+    @Autowired
+    private MovieDao movieDao;
 
-    //@Autowired
-    private MovieWriterDao movieWriterDao = new MovieWriterDao();
+    @Autowired
+    private MovieWriterDao movieWriterDao;
 
     @Override
     public List<Review> getReviews(String movieId, int start, int offset) {

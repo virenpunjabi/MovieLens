@@ -18,3 +18,7 @@ kubectl create secret docker-registry regcred --docker-username=roygou --docker-
 
 kubectl get pod nginx
 
+kubectl scale deployment movielens --replicas=1
+
+kubectl set image deployment/movielens-back movielens-back=roygou/movielens-backend:latest
+

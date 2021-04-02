@@ -15,11 +15,11 @@ import java.io.IOException;
 public class ActorServiceImpl implements IActorService {
     private static final Logger LOG = LoggerFactory.getLogger(ActorServiceImpl.class);
 
-    //@Autowired
-    MovieDao movieDao = MovieDao.getInstance();
+    @Autowired
+    MovieDao movieDao;
 
-    //@Autowired
-    MovieWriterDao movieWriterDao = new MovieWriterDao();
+    @Autowired
+    MovieWriterDao movieWriterDao;
 
     @Override
     public void addActor(Actor actor) {

@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment # deployment
 metadata:
-  name: movielens
+  name: movielens-back
   labels:
-    app: movielens-deploy
+    app: movielens-back-deploy
 spec: # deployment spec
   replicas: 1
   selector:
@@ -17,6 +17,9 @@ spec: # deployment spec
       containers:
         - name: movielens-back
           image: roygou/movielens-backend:latest
+          env:
+            - name: "SPRING_PROFILE"
+              value: "dev"
           resources:
             requests:
               cpu: 250m
