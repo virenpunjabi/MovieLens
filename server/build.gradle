@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
+    id 'com.google.cloud.tools.jib' version '2.8.0'
 }
 
 def repoDir = project.properties['GRADLE_REPO_DIR']
@@ -57,7 +58,7 @@ dependencies {
 group = 'edu.sampleprojects'
 version = '1.0-SNAPSHOT'
 description = 'MovieLens'
-java.sourceCompatibility = JavaVersion.VERSION_15
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 def classpath = configurations.getByName("compile").resolve().collect {it.getName()}
 def buildClasspath = classpath.join(":");
@@ -80,3 +81,9 @@ task copyDep(type: Copy) {
     from configurations.compile.resolve().findAll {!it.absolutePath.contains("${repoDir}")}
     into repoDir
 }
+
+//from {
+//
+//} to {
+//
+//}

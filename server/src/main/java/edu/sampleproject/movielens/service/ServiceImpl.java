@@ -20,11 +20,11 @@ import java.util.List;
 public class ServiceImpl implements IService {
     private static final Logger LOG = LoggerFactory.getLogger(ServiceImpl.class);
 
-    //@Autowired
-    private MovieDao movieDao = MovieDao.getInstance();
+    @Autowired
+    private MovieDao movieDao;
 
-    //@Autowired
-    private MovieWriterDao movieWriterDao = new MovieWriterDao();
+    @Autowired
+    private MovieWriterDao movieWriterDao;
 
     @Override
     public List<MovieLight> getNLightMovies(int n) {
