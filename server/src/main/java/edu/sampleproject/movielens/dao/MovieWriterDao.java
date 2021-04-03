@@ -107,7 +107,7 @@ public class MovieWriterDao {
         XContentBuilder builder = XContentFactory.jsonBuilder()
                 .startObject()
                 .field("Name",actor.getName())
-                .field("Dob",actor.getDob())
+                .field("DateOfBirth",actor.getDob())
                 .field("BirthPlace",actor.getBirthPlace())
                 .field("Description",actor.getDescription())
                 .endObject();

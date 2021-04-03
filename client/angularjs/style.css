@@ -77,7 +77,8 @@ font-style: oblique;}
     border-color: lightgrey;
     border-radius: 6px;
     padding: 2%;
-    margin: 2%;    
+    margin: 3%;    
+    cursor: pointer;
 }
 #language-top-row span{
     font-size: 130%;

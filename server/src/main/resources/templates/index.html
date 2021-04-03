@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <title></title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="js/server-config.js"></script>
 </head>
-<link rel="stylesheet" th:href="@{css/style.css}">
+<link rel="stylesheet" href="css/style.css">
 <body>
 <div id="top-row">
     <a id="logo" href="">MovieLens</a>
@@ -17,68 +15,59 @@
     </form>
 </div>
 
-<div id="main-body" class="clearfix">
+<div id="main-body" class="clearfix" ng-app="movieContainerApp">
 
 
-    <div id="siderBar-filters">
+    <div id="siderBar-filters" ng-controller="filterContainerCtrl">
         <div>
-            <h1 style="display: inline-block;margin: 5%;">Filters</h1>
-            <span style="float: right;margin: 8%;"><input type="button" value="Apply"
-                                                          style="padding: 10%;font-size: 110%;"></span>
+            <h1 style="display: inline-block;margin: 5%">Filters</h1>
+            <span style="float: right;margin: 8%"><input type="button" ng-click="applyFilters()" value="Apply"
+                                                         style="padding: 10%;font-size: 110%"></span>
         </div>
         <div id="language-filter-box">
             <div id="language-top-row">
-                <span style="margin-left: 5%">Language</span><span style="float: right;margin-right: 5%;">Clear</span>
+                <span style="margin-left: 5%">Language</span><span style="float: right;margin-right: 5%;cursor:pointer"
+                                                                   ng-click="clearLanguageFilter()">Clear</span>
             </div>
             <div id="language-filters">
-                <span class="filter-option">Hindi</span>
-                <span class="filter-option">English</span>
-                <span class="filter-option">Marathi</span>
-                <span class="filter-option">Gujrati</span>
-                <span class="filter-option">Telugu</span>
-                <span class="filter-option">Kannada</span>
-                <span class="filter-option">Tamil</span>
+                <span class="filter-option" ng-repeat="x in language" ng-click="pushLanguage(x)"
+                      id="lang-{{x}}">{{x}}</span>
+
             </div>
         </div>
 
         <div id="language-filter-box">
             <div id="language-top-row">
-                <span style="margin-left: 5%;">Genre</span><span style="float: right;margin-right: 5%;">Clear</span>
+                <span style="margin-left: 5%">Genre</span><span style="float: right;margin-right: 5%;cursor:pointer"
+                                                                ng-click="clearGenreFilter()">Clear</span>
             </div>
             <div id="language-filters">
-                <span class="filter-option">Romantic</span>
-                <span class="filter-option">Comedy</span>
-                <span class="filter-option">Drama</span>
-                <span class="filter-option">Action</span>
-                <span class="filter-option">Horror</span>
-                <span class="filter-option">Adventure</span>
-                <span class="filter-option">Thriller</span>
-                <span class="filter-option">Biography</span>
-                <span class="filter-option">Fantasy</span>
-                <span class="filter-option">Sci-Fi</span>
+                <span class="filter-option" ng-repeat="x in genre" ng-click="pushGenre(x)" id="genre-{{x}}">{{x}}</span>
             </div>
         </div>
 
     </div>
 
-    <div ng-app="movieContainerApp" ng-controller="movieContainerCtrl" id="movie-container">
+    <div ng-controller="movieContainerCtrl" id="movie-container">
         <div id="language-filters">
-       
-           <span class="filter-option" style="width: 16%" ng-repeat="x in lightMovies">
-                <img src="{{x.posterUri}}" alt="" width="150" height="213">
-                <label class="movie-title">{{x.name}}</label>
-                <label class="movie-attr">{{x.rating}}</label>
-                <label class="list-attr">{{x.genreList}}</label>
-                <label class="list-attr">{{x.languageList}}</label>
+
+          <span ng-repeat="x in lightMovies">
+           <span class="filter-option" style="width: 16%" ng-click="redirectToMoviePage(x.id)">
+                    <img src="{{x.posterUri}}" alt="" width="150" height="213">
+                    <label class="movie-title">{{x.name}}</label>
+                    <label class="movie-attr">{{x.rating}}</label>
+                    <label class="list-attr">{{x.genreList}}</label>
+                    <label class="list-attr">{{x.languageList}}</label>
             </span>
+        </span>
 
             <span class="filter-option" style="width: 16%">
-                <img src="https://movielensstorageacc.blob.core.windows.net/images/IronMan.jpg" alt="" width="150" height="213">
-                <label class="movie-title">IronMan</label>
-                <label class="movie-attr">4.5</label>
-                <label class="list-attr">DRAMA,COMEDY</label>
-                <label class="list-attr">ENGLISH</label>
-            </span>
+        <img src="http://localhost:8080/images/chhichore.jpg" alt="" width="150" height="213">
+        <label class="movie-title">Chhichore</label>
+        <label class="movie-attr">4.5</label>
+        <label class="list-attr">DRAMA,COMEDY</label>
+        <label class="list-attr">HINDI</label>
+        </span>
 
         </div>
 
@@ -86,25 +75,159 @@
 </div>
 
 <script>
-        
+
         var movieContainerApp = angular.module("movieContainerApp",[]);
-        var backendURL = "http://20.193.31.25/home"
-        movieContainerApp.controller("movieContainerCtrl",function($scope, $http){
-            //52.226.47.140
-              $http.get(backendURL).then(function(response){
-                  //console.log(response.data);
-                  $scope.lightMovies = response.data;
-                  
-                  for(x in $scope.lightMovies){
+
+        movieContainerApp.factory("DataTransfer", function(){
+           var data = [];
+
+            return {
+                getMovieDetails: function(){
+                    return data;
+                },
+                setMovieDetails: function(movieDetails){
+                    data = movieDetails;
+                }
+
+            }
+        });
+
+        movieContainerApp.controller("movieContainerCtrl",function($scope, $http, $rootScope){
+              $http.get(serverUrl+"/home").then(function(response){
+                  $scope.showMovies(response.data);
+              });
+
+            $rootScope.$on("filteredMovies",function(event,data){
+                        $scope.showMovies(data);
+              });
+
+            $scope.showMovies = function(data) {
+                $scope.lightMovies = data;
+
+                            for(x in $scope.lightMovies){
                       var genreStr = $scope.lightMovies[x].genreList.toString();
                       $scope.lightMovies[x].genreList = genreStr;
                       var languageStr = $scope.lightMovies[x].languageList.toString();
                       $scope.lightMovies[x].languageList = languageStr;
-                    
-                  }
+
+                            }
                   console.log($scope.lightMovies);
-              });
+            }
+
+            $scope.redirectToMoviePage = function(id){
+                console.log(id);
+                window.location.href = serverUrl+"/moviePage/"+id;
+            }
+
+
+
         });
+
+
+            movieContainerApp.controller("filterContainerCtrl",function($scope, $http, $rootScope){
+            $scope.language = ['Hindi','English','Marathi','Gujrati','Telegu','Tamil','Kannada'];
+            $scope.genre = ['Drama','Action','Horror','Adventure','Thriller','Biography','Fantasy','Sci-Fi'];
+            $scope.addLanguage = [];
+            $scope.addGenre = [];
+            $scope.pushLanguage = function(lang){
+                var index = $scope.addLanguage.indexOf(lang);
+                if(index >= 0 ){
+                    $scope.addLanguage.splice(index,1);
+                    document.getElementById("lang-"+lang).style.background = "none";
+                }
+                else{
+                    $scope.addLanguage.push(lang);
+                    document.getElementById("lang-"+lang).style.background = "lightgreen";
+                }
+
+            console.log($scope.addLanguage);
+            }
+
+            $scope.pushGenre = function(genre){
+                var index = $scope.addGenre.indexOf(genre);
+                if(index >= 0 ){
+                    $scope.addGenre.splice(index,1);
+                    document.getElementById("genre-"+genre).style.background = "none";
+                }
+
+                else{
+                    $scope.addGenre.push(genre);
+                    document.getElementById("genre-"+genre).style.background = "lightgreen";
+                }
+            console.log($scope.addGenre);
+            }
+
+        $scope.applyFilters = function(){
+            var filterStr = "";
+            var langFilter = "";
+            var genreFilter = "";
+
+            if($scope.addLanguage.length < 1 && $scope.addGenre.length < 1) {
+                $http.get(serverUrl+"/home").then(function(response){
+                  $rootScope.$broadcast('filteredMovies',response.data);
+              });
+                return;
+            }
+
+
+            if($scope.addLanguage.length > 0){
+                langFilter = "Language=";
+                for(var lang in $scope.addLanguage)
+                    langFilter = langFilter + $scope.addLanguage[lang] + "|";
+
+                langFilter = langFilter.substring(0,langFilter.lastIndexOf("|"));
+                console.log(langFilter);
+            }
+
+            if($scope.addGenre.length > 0){
+                if($scope.addLanguage.length > 0)
+                    genreFilter = "&";
+
+                genreFilter = genreFilter + "Genres=";
+
+                 for(var genre in $scope.addGenre)
+                    genreFilter = genreFilter + $scope.addGenre[genre] + "|";
+
+                genreFilter = genreFilter.substring(0,genreFilter.lastIndexOf("|"));
+                console.log(genreFilter);
+            }
+            filterStr = langFilter+genreFilter;
+            var urlToApplyFilter = serverUrl + '/homePost';
+
+            $http({
+                method: 'POST',
+                url: urlToApplyFilter,
+                data: filterStr
+                })
+                .then(function (success) {
+                    console.log(success.data);
+                    $rootScope.$broadcast('filteredMovies',success.data);
+                });
+
+            console.log(filterStr);
+
+        }
+
+        $scope.clearLanguageFilter = function(){
+            for(var x in $scope.addLanguage)
+                document.getElementById("lang-"+$scope.addLanguage[x]).style.background = "none";
+
+            $scope.addLanguage = [];
+
+            console.log($scope.addLanguage);
+        }
+
+        $scope.clearGenreFilter = function(){
+            for(var x in $scope.addGenre)
+                document.getElementById("genre-"+$scope.addGenre[x]).style.background = "none";
+
+            $scope.addGenre = [];
+            console.log($scope.addGenre);
+        }
+
+            });
+       // console.log("Location is "+window.location.hostname);
+
 
 
 </script>
