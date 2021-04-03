@@ -82,8 +82,4 @@ task copyDep(type: Copy) {
     into repoDir
 }
 
-//from {
-//
-//} to {
-//
-//}
+//jib.to.image = 'roygou/movielens-jib:1.0.1'
