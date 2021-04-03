@@ -78,7 +78,7 @@
         <script>
                 
                 var movieContainerApp = angular.module("movieContainerApp",[]);
-                var backendURL = "http://20.193.31.25/home";
+                var backendURL = "https://20.193.31.25/home";
                 movieContainerApp.controller("movieContainerCtrl",function($scope, $http) {
                     $http.get(backendURL).then(function(response) {
                         $scope.lightMovies = response.data;
