@@ -1,9 +1,6 @@
 package edu.sampleproject.movielens.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.codec.language.bm.Lang;
 
 import java.util.List;
@@ -12,15 +9,17 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class MovieLight {
     private String id;
     private String name;
     private List<Genre> genreList;
+    private String genres;
     private String posterUri;
     private Double rating;
     private Certification certification;
     private List<Language> languageList;
+    private String languages;
     private Integer runtime;
-
 }
 

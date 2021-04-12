@@ -1,9 +1,8 @@
 package edu.sampleproject.movielens.graphql.service;
 
-import edu.sampleproject.movielens.dao.MovieDao;
+import edu.sampleproject.movielens.dao.MovieDaoFactory;
 import edu.sampleproject.movielens.pojo.*;
 import graphql.schema.DataFetcher;
-import graphql.schema.DataFetchingEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ import java.util.List;
 public class GraphQLService {
 
     @Autowired
-    private MovieDao movieDao;
+    private MovieDaoFactory movieDaoFactory;
 
     public DataFetcher<Movie> getMovie() {
         return dataFetchingEnvironment -> {
@@ -67,7 +66,7 @@ public class GraphQLService {
             String movieId = dataFetchingEnvironment.getArgument("id");
             int start = dataFetchingEnvironment.getArgument("start");
             int offset = dataFetchingEnvironment.getArgument("offset");
-            return movieDao.getNReviewsForMovie(movieId, start, offset);
+            return movieDaoFactory.getMovieDao().getNReviewsForMovie(movieId, start, offset);
         };
     }
 

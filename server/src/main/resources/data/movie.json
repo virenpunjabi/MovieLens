@@ -1,0 +1,47 @@
+[
+  {
+    "id" :  "IronMan",
+    "name" : "Iron Man",
+    "genres" : ["ACTION", "THRILLER"],
+    "posterUri" :  "IronMan.jpg",
+    "totalRating" : 9.0,
+    "totalReviewers" : 2,
+    "languages" : ["ENGLISH"]
+  },
+  {
+    "id" :  "Dhoni",
+    "name" : "Dhoni : The Untold Story",
+    "genres" : ["DRAMA"],
+    "posterUri" :  "Dhoni.jpg",
+    "totalRating" : 8.0,
+    "totalReviewers" : 2,
+    "languages" : ["HINDI"]
+  },
+  {
+    "id" :  "Spiderman",
+    "name" : "Amazing Spiderman",
+    "genres" : ["ACTION", "THRILLER"],
+    "posterUri" :  "Spiderman.jpg",
+    "totalRating" : 23.0,
+    "totalReviewers" : 5,
+    "languages" : ["ENGLISH"]
+  },
+  {
+    "id" :  "TheLastStand",
+    "name" : "The last Stand",
+    "genres" : ["ACTION", "THRILLER"],
+    "posterUri" :  "TheLastStand.jpg",
+    "totalRating" : 78.0,
+    "totalReviewers" : 10,
+    "languages" : ["ENGLISH"]
+  },
+  {
+    "id" :  "Tenet",
+    "name" : "Tenet",
+    "genres" : ["ACTION", "THRILLER"],
+    "posterUri" :  "Tenet.jpg",
+    "totalRating" : 798.0,
+    "totalReviewers" : 100,
+    "languages" : ["ENGLISH"]
+  }
+]
