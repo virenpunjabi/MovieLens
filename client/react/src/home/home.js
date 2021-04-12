@@ -79,7 +79,8 @@ class Result extends React.Component {
     } 
 
     componentDidMount() {
-        var backendURL = "https://localhost:8443/home";
+        // var backendURL = "https://localhost:8443/home";
+        var backendURL = "https://20.193.31.25/home";
 
         fetch(backendURL)
         .then( res => res.json())
