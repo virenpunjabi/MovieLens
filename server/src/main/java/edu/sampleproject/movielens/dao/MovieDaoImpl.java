@@ -1,6 +1,7 @@
 package edu.sampleproject.movielens.dao;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.sampleproject.movielens.configurations.CommonConfig;
 import edu.sampleproject.movielens.pojo.*;
 import org.apache.http.HttpHost;
@@ -43,49 +44,9 @@ public class MovieDaoImpl implements MovieDao {
         GetRequest request = new GetRequest("movie");
         request.id(movieId);
         GetResponse response = client.get(request, RequestOptions.DEFAULT);
-        Map<String, Object> responseMap = response.getSourceAsMap();
-
-        Movie movie = getMovieFromMap(responseMap);
+        ObjectMapper mapper = new ObjectMapper();
+        Movie movie = mapper.readValue(response.getSourceAsString(), Movie.class);
         movie.setId(movieId);
-        return movie;
-    }
-
-    private Movie getMovieFromMap(Map jsonMap) {
-        Movie movie = new Movie();
-        movie.setName((String) jsonMap.get("Name"));
-        movie.setShortDesc((String) jsonMap.get("Description"));
-        movie.setCertification(Certification.getFromName(((String) jsonMap.get("Certification")).toUpperCase()));
-        movie.setRuntime((Integer) jsonMap.get("Runtime"));
-        movie.setReleaseDate((LocalDate) jsonMap.get("ReleaseDate"));
-        movie.setPosterUri((String) jsonMap.get("PosterURI"));
-        movie.setTrailerLink((String) jsonMap.get("TrailerLink"));
-        movie.setTotalRating((Double) jsonMap.get("TotalRating"));
-        movie.setTotalReviewers((Double) jsonMap.get("TotalReviewers"));
-        if (jsonMap.get("Language") instanceof List) {
-            List<Language> languages = new ArrayList<Language>();
-            for (String language : (List<String>) jsonMap.get("Language")) {
-                languages.add(Language.valueOf(language.toUpperCase()));
-            }
-            movie.setLanguages(languages);
-        } else {
-            List<Language> languages = new ArrayList<Language>();
-            String language = (String) jsonMap.get("Language");
-            languages.add(Language.valueOf(language.toUpperCase()));
-            movie.setLanguages(languages);
-        }
-
-        if (jsonMap.get("Genres") instanceof List) {
-            List<Genre> genres = new ArrayList<Genre>();
-            for (String genre : (List<String>) jsonMap.get("Genres")) {
-                genres.add(Genre.valueOf(genre.toUpperCase()));
-            }
-            movie.setGenres(genres);
-        } else {
-            List<Genre> genres = new ArrayList<Genre>();
-            String genre = (String) jsonMap.get("Genres");
-            genres.add(Genre.valueOf(genre.toUpperCase()));
-            movie.setGenres(genres);
-        }
         return movie;
     }
 
@@ -105,39 +66,6 @@ public class MovieDaoImpl implements MovieDao {
         return searchHits;
     }
 
-    private MovieLight getLightMovieFromMap(Map<String, Object> jsonMap) {
-        MovieLight movie = new MovieLight();
-        movie.setName((String) jsonMap.get("Name"));
-        movie.setPosterUri((String) jsonMap.get("PosterURI"));
-        movie.setRating((Double) jsonMap.get("Rating"));
-        //movie.setCertification(Certification.getFromName(((String) jsonMap.get("Certification")).toUpperCase()));
-        if (jsonMap.get("Genres") instanceof List) {
-            List<Genre> genres = new ArrayList<Genre>();
-            for (String genre : (List<String>) jsonMap.get("Genres")) {
-                genres.add(Genre.valueOf(genre.toUpperCase()));
-            }
-            movie.setGenreList(genres);
-        } else {
-            List<Genre> genres = new ArrayList<Genre>();
-            String genre = (String) jsonMap.get("Genres");
-            genres.add(Genre.valueOf(genre.toUpperCase()));
-            movie.setGenreList(genres);
-        }
-        if (jsonMap.get("Language") instanceof List) {
-            List<Language> languages = new ArrayList<Language>();
-            for (String genre : (List<String>) jsonMap.get("Language")) {
-                languages.add(Language.valueOf(genre.toUpperCase()));
-            }
-            movie.setLanguageList(languages);
-        } else {
-            List<Language> languages = new ArrayList<Language>();
-            String language = (String) jsonMap.get("Language");
-            languages.add(Language.valueOf(language.toUpperCase()));
-            movie.setLanguageList(languages);
-        }
-        return movie;
-    }
-
     public List<Review> getNReviewsForMovie(String movieId, int start, int offset) throws IOException {
         BoolQueryBuilder query = QueryBuilders.boolQuery()
                 .filter(QueryBuilders.matchQuery("MovieId", movieId));
@@ -147,76 +75,20 @@ public class MovieDaoImpl implements MovieDao {
         builder.size(offset);
         SearchHit[] searchHits = getResponse(builder, "Review");
         List<Review> reviewList = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
         for (SearchHit searchHit : searchHits) {
-            reviewList.add(getReviewsForMovieMap(searchHit.getSourceAsMap()));
+            reviewList.add(mapper.readValue(searchHit.getSourceAsString(), Review.class));
         }
         return reviewList;
-    }
-
-    private Review getReviewsForMovieMap(Map<String, Object> jsonMap) {
-        Review review = new Review();
-        review.setComment((String) jsonMap.get("Comment"));
-        review.setRating((Double) jsonMap.get("Rating"));
-        review.setReviewDate((Date) jsonMap.get("Date"));
-        review.setUserName((String) jsonMap.get("Username"));
-        review.setReviewType(ReviewType.getFromName((String) jsonMap.get("ReviewType")));
-        return review;
-    }
-
-//    private List<LightActor> getLightActorsUsingIds(List<String> actorIds) throws IOException {
-//        BoolQueryBuilder query = QueryBuilders.boolQuery()
-//                .filter(QueryBuilders.idsQuery().addIds((String[])actorIds.toArray()));//matchQuery("MovieId", movieId));
-//        SearchSourceBuilder builder = new SearchSourceBuilder().postFilter(query);
-//        SearchHit[] searchHits = getResponse(builder, "actor");
-//        String[] includedFields = new String[] {"ActorId","Name"};
-//        String[] excludedFields = new String[0];
-//        builder.fetchSource(includedFields, excludedFields);
-//
-//        List<LightActor> lightActorList = new ArrayList<>();
-//        for (SearchHit searchHit : searchHits) {
-//            lightActorList.add(getLightActorsFromMap(searchHit.getSourceAsMap()));
-//        }
-//        return lightActorList;
-//    }
-
-    private LightActor getLightActorsFromMap(Map<String, Object> jsonMap) {
-        LightActor lightActor = new LightActor();
-        lightActor.setId((String) jsonMap.get("ActorId"));
-        lightActor.setName((String) jsonMap.get("Name"));
-        return lightActor;
     }
 
     public Actor getActor(String actorId) throws IOException {
         GetRequest request = new GetRequest("actor");
         request.id(actorId);
         GetResponse response = client.get(request, RequestOptions.DEFAULT);
-        Map<String, Object> responseMap = response.getSourceAsMap();
-
-        Actor actor = getActorFromMap(responseMap);
+        Actor actor = new ObjectMapper().readValue(response.getSourceAsString(), Actor.class);
         actor.setId(actorId);
         return actor;
-    }
-
-    private Actor getActorFromMap(Map<String, Object> jsonMap) throws IOException {
-        List<String> movieIdList = new ArrayList<String>();
-        Actor actor = new Actor();
-        //actor.setId((String) jsonMap.get("ActorId"));
-        actor.setName((String) jsonMap.get("Name"));
-        //actor.setActorImageUri((String) jsonMap.get("ActorImageURI"));
-        actor.setDob((LocalDate) jsonMap.get("Dob"));
-        actor.setBirthPlace((String) jsonMap.get("BirthPlace"));
-        actor.setDescription((String) jsonMap.get("Description"));
-        if (jsonMap.get("Movies") instanceof List) {
-            for (String movie : (List<String>) jsonMap.get("Movies")) {
-                movieIdList.add(movie);
-            }
-        } else {
-            String movie = (String) jsonMap.get("Movies");
-            movieIdList.add(movie);
-        }
-        actor.setMovies(getLightMoviesForActor(movieIdList));
-
-        return null;
     }
 
     private List<MovieLight> getLightMoviesForActor(List<String> movieIdList) throws IOException {
@@ -232,8 +104,9 @@ public class MovieDaoImpl implements MovieDao {
         builder.fetchSource(includedFields, excludedFields);
         SearchHit[] searchHits = getResponse(builder, "movie");
         List<MovieLight> movieList = new ArrayList<MovieLight>();
+        ObjectMapper mapper = new ObjectMapper();
         for (SearchHit searchHit : searchHits) {
-            MovieLight movieLight = getLightMovieFromMap(searchHit.getSourceAsMap());
+            MovieLight movieLight = mapper.readValue(searchHit.getSourceAsString(), MovieLight.class);
             movieLight.setId(searchHit.getId());
             movieLight.setPosterUri(commonConfig.getImageURI() + searchHit.getId() + ".jpg");
             movieList.add(movieLight);
