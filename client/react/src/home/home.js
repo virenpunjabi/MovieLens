@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Constants from '../constants';
 import './home.css';
 import MovieTiles from './movieTiles'
 
@@ -79,9 +80,8 @@ class Result extends React.Component {
     } 
 
     componentDidMount() {
-        // var backendURL = "https://localhost:8443/home";
-        var backendURL = "https://20.193.31.25/home";
-
+        var backendURL = Constants.backendURL + "/home";
+        console.log(backendURL);    
         fetch(backendURL)
         .then( res => res.json())
         .then( data => {
