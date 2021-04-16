@@ -1,0 +1,32 @@
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+  
+.movie-container {
+    /*    float: right;*/
+    display: inline-block;
+    background-color: antiquewhite;
+    width: 70%;
+    height:auto;
+}
+
+.movie-title{
+    font-size: 110%;margin-top: 5%;font-weight: bold;
+    width: 160px;
+    height: 44px;
+    white-space: nowrap;
+    overflow: scroll;
+}
+
+.movie-attr{
+    font-size: 100%;margin-top: 5%;
+}
+
+.list-attr{
+    font-size: 80%;
+    font-style: italic;
+    margin-top: 5%;
+    word-break:keep-all;
+}

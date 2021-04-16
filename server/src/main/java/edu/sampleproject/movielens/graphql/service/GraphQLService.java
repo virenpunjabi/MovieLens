@@ -1,9 +1,8 @@
 package edu.sampleproject.movielens.graphql.service;
 
-import edu.sampleproject.movielens.dao.MovieDao;
+import edu.sampleproject.movielens.dao.MovieDaoFactory;
 import edu.sampleproject.movielens.pojo.*;
 import graphql.schema.DataFetcher;
-import graphql.schema.DataFetchingEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +14,13 @@ import java.util.List;
 public class GraphQLService {
 
     @Autowired
-    private MovieDao movieDao;
+    private MovieDaoFactory movieDaoFactory;
 
     public DataFetcher<Movie> getMovie() {
         return dataFetchingEnvironment -> {
-            String id = dataFetchingEnvironment.getArgument("id");
             Movie movie = new Movie();
             movie.setId("1");
             movie.setName("3 idiots");
-            //movie.setRating(2.0);
             Actor actor = new Actor();
             actor.setName("ABC");
             Actor actor1 = new Actor();
@@ -31,7 +28,6 @@ public class GraphQLService {
             List<Actor> actorList = new ArrayList<>();
             actorList.add(actor);
             actorList.add(actor1);
-            //movie.setActors(actorList);
             movie.setCertification(Certification.ADULTS);
             movie.setTrailerLink("new ");
             LocalDate date = LocalDate.of(2020, 1, 8);
@@ -43,7 +39,6 @@ public class GraphQLService {
 
     public DataFetcher<List<MovieLight>> getNRecentMovies() {
         return dataFetchingEnvironment -> {
-            int n = dataFetchingEnvironment.getArgument("n");
             MovieLight movieLight = new MovieLight();
             movieLight.setId("1");
             movieLight.setName("3 idiots");
@@ -67,7 +62,7 @@ public class GraphQLService {
             String movieId = dataFetchingEnvironment.getArgument("id");
             int start = dataFetchingEnvironment.getArgument("start");
             int offset = dataFetchingEnvironment.getArgument("offset");
-            return movieDao.getNReviewsForMovie(movieId, start, offset);
+            return movieDaoFactory.getMovieDao().getNReviewsForMovie(movieId, start, offset);
         };
     }
 

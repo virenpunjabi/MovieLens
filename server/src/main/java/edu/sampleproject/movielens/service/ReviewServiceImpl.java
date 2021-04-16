@@ -1,6 +1,6 @@
 package edu.sampleproject.movielens.service;
 
-import edu.sampleproject.movielens.dao.MovieDao;
+import edu.sampleproject.movielens.dao.MovieDaoFactory;
 import edu.sampleproject.movielens.dao.MovieWriterDao;
 import edu.sampleproject.movielens.pojo.Review;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.List;
 public class ReviewServiceImpl implements IReviewService {
 
     @Autowired
-    private MovieDao movieDao;
+    private MovieDaoFactory movieDaoFactory;
 
     @Autowired
     private MovieWriterDao movieWriterDao;
@@ -22,7 +22,7 @@ public class ReviewServiceImpl implements IReviewService {
     @Override
     public List<Review> getReviews(String movieId, int start, int offset) {
         try {
-            return movieDao.getNReviewsForMovie(movieId,start,offset);
+            return movieDaoFactory.getMovieDao().getNReviewsForMovie(movieId,start,offset);
         } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();

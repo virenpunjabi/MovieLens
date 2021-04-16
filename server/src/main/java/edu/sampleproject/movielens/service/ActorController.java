@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ActorController {
-
+    @Autowired
     IActorService service;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/actor")
+    @PostMapping(value = "/actor")
     public void addActor(@RequestBody Actor actor) {
         service.addActor(actor);
     }
@@ -17,12 +17,11 @@ public class ActorController {
     @RequestMapping("/actor/{id}")
     public Actor getActor(@PathVariable String id) {
         return service.getActor(id);
-
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/actor/{id}")
+    @PutMapping(value = "/actor/{id}")
     public void updateActor(@RequestBody Actor actor, @PathVariable String id) {
-
+        // todo
     }
 
 }
